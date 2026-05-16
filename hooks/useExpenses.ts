@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Expense, Installment, initialExpenses, PaymentStatus } from "@/lib/data";
+import {
+  Expense,
+  Income,
+  Installment,
+  initialExpenses,
+  initialIncomes,
+  PaymentStatus,
+} from "@/lib/data";
 
-const STORAGE_KEY = "reforma-dashboard-expenses-v2";
+const STORAGE_KEY = "reforma-dashboard-expenses-v3";
+const INCOME_KEY = "reforma-dashboard-incomes-v3";
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
@@ -11,29 +19,38 @@ function generateId(): string {
 
 export function useExpenses() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [incomes, setIncomes] = useState<Income[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    // Limpa versões antigas do cache ao detectar nova versão
+    // Limpa versões antigas do cache
     localStorage.removeItem("reforma-dashboard-expenses");
+    localStorage.removeItem("reforma-dashboard-expenses-v2");
+    localStorage.removeItem("reforma-dashboard-incomes-v2");
+
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        setExpenses(JSON.parse(stored));
-      } else {
-        setExpenses(initialExpenses);
-      }
+      const storedExpenses = localStorage.getItem(STORAGE_KEY);
+      const storedIncomes = localStorage.getItem(INCOME_KEY);
+      setExpenses(storedExpenses ? JSON.parse(storedExpenses) : initialExpenses);
+      setIncomes(storedIncomes ? JSON.parse(storedIncomes) : initialIncomes);
     } catch {
       setExpenses(initialExpenses);
+      setIncomes(initialIncomes);
     }
     setHydrated(true);
   }, []);
 
-  const persist = useCallback((next: Expense[]) => {
+  const persistExpenses = useCallback((next: Expense[]) => {
     setExpenses(next);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
+  const persistIncomes = useCallback((next: Income[]) => {
+    setIncomes(next);
+    localStorage.setItem(INCOME_KEY, JSON.stringify(next));
+  }, []);
+
+  // ── Expenses actions ────────────────────────────────────────────────────────
   const toggleInstallmentStatus = useCallback(
     (expenseId: string, installmentId: string) => {
       setExpenses((prev) => {
@@ -76,9 +93,10 @@ export function useExpenses() {
           id: generateId(),
           number: i + 1,
           dueDate,
-          amount: i === installmentCount - 1
-            ? totalAmount - perInstallment * (installmentCount - 1)
-            : perInstallment,
+          amount:
+            i === installmentCount - 1
+              ? totalAmount - perInstallment * (installmentCount - 1)
+              : perInstallment,
           status: "pendente" as PaymentStatus,
         };
       });
@@ -93,31 +111,51 @@ export function useExpenses() {
         notes,
         createdAt: new Date().toISOString().split("T")[0],
       };
-      persist([...expenses, newExpense]);
+      persistExpenses([...expenses, newExpense]);
     },
-    [expenses, persist]
+    [expenses, persistExpenses]
   );
 
   const removeExpense = useCallback(
     (expenseId: string) => {
-      persist(expenses.filter((e) => e.id !== expenseId));
+      persistExpenses(expenses.filter((e) => e.id !== expenseId));
     },
-    [expenses, persist]
+    [expenses, persistExpenses]
+  );
+
+  // ── Income actions ──────────────────────────────────────────────────────────
+  const addIncome = useCallback(
+    (data: { description: string; amount: number; date: string; notes?: string }) => {
+      const newIncome: Income = { id: generateId(), ...data };
+      persistIncomes([...incomes, newIncome]);
+    },
+    [incomes, persistIncomes]
+  );
+
+  const removeIncome = useCallback(
+    (incomeId: string) => {
+      persistIncomes(incomes.filter((i) => i.id !== incomeId));
+    },
+    [incomes, persistIncomes]
   );
 
   const resetToDefaults = useCallback(() => {
-    persist(initialExpenses);
-  }, [persist]);
+    persistExpenses(initialExpenses);
+    persistIncomes(initialIncomes);
+  }, [persistExpenses, persistIncomes]);
 
-  // ─── Computed stats ────────────────────────────────────────────────────────
-  const totalAmount = expenses.reduce((sum, e) => sum + e.totalAmount, 0);
+  // ── Computed stats ──────────────────────────────────────────────────────────
+  const totalExpenses = expenses.reduce((sum, e) => sum + e.totalAmount, 0);
   const totalPaid = expenses.reduce(
     (sum, e) =>
       sum + e.installments.filter((i) => i.status === "pago").reduce((s, i) => s + i.amount, 0),
     0
   );
-  const totalPending = totalAmount - totalPaid;
-  const progress = totalAmount > 0 ? (totalPaid / totalAmount) * 100 : 0;
+  const totalPending = totalExpenses - totalPaid;
+  const progress = totalExpenses > 0 ? (totalPaid / totalExpenses) * 100 : 0;
+
+  const totalIncomes = incomes.reduce((sum, i) => sum + i.amount, 0);
+  const balance = totalIncomes - totalPaid; // saldo disponível (entradas - já pago)
 
   const today = new Date();
   const totalOverdue = expenses.reduce(
@@ -140,20 +178,25 @@ export function useExpenses() {
         .map((i) => ({ ...i, expenseDescription: e.description, expenseId: e.id }))
     )
     .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
-    .slice(0, 5);
+    .slice(0, 6);
 
   return {
     expenses,
+    incomes,
     hydrated,
-    totalAmount,
+    totalExpenses,
     totalPaid,
     totalPending,
     totalOverdue,
+    totalIncomes,
+    balance,
     progress,
     upcomingInstallments,
     toggleInstallmentStatus,
     addExpense,
     removeExpense,
+    addIncome,
+    removeIncome,
     resetToDefaults,
   };
 }

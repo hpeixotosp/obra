@@ -7,6 +7,7 @@ import { ExpenseTable } from "@/components/ExpenseTable";
 import { ChartSection } from "@/components/ChartSection";
 import { UpcomingPanel } from "@/components/UpcomingPanel";
 import { AddExpenseModal } from "@/components/AddExpenseModal";
+import { IncomePanel } from "@/components/IncomePanel";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -15,26 +16,32 @@ import {
   RefreshCcw,
   BarChart3,
   LayoutList,
+  ArrowDownCircle,
 } from "lucide-react";
 
 export default function DashboardPage() {
   const {
     expenses,
+    incomes,
     hydrated,
-    totalAmount,
+    totalExpenses,
     totalPaid,
     totalPending,
     totalOverdue,
+    totalIncomes,
+    balance,
     progress,
     upcomingInstallments,
     toggleInstallmentStatus,
     addExpense,
     removeExpense,
+    addIncome,
+    removeIncome,
     resetToDefaults,
   } = useExpenses();
 
   const [addOpen, setAddOpen] = useState(false);
-  const [view, setView] = useState<"overview" | "list">("overview");
+  const [view, setView] = useState<"overview" | "list" | "financeiro">("overview");
 
   if (!hydrated) {
     return (
@@ -100,12 +107,14 @@ export default function DashboardPage() {
 
         <Separator className="bg-white/5" />
 
-        {/* ── Summary Cards + Progress ──────────────────────────────────── */}
+        {/* ── Summary Cards ────────────────────────────────────────────── */}
         <SummaryCards
-          totalAmount={totalAmount}
+          totalExpenses={totalExpenses}
           totalPaid={totalPaid}
           totalPending={totalPending}
           totalOverdue={totalOverdue}
+          totalIncomes={totalIncomes}
+          balance={balance}
           progress={progress}
           expenseCount={expenses.length}
         />
@@ -134,15 +143,23 @@ export default function DashboardPage() {
             <LayoutList className="h-4 w-4" />
             Despesas
           </button>
+          <button
+            onClick={() => setView("financeiro")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              view === "financeiro"
+                ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            <ArrowDownCircle className="h-4 w-4" />
+            Entradas
+          </button>
         </div>
 
         {/* ── Main Content ─────────────────────────────────────────────── */}
-        {view === "overview" ? (
+        {view === "overview" && (
           <div className="space-y-6">
-            {/* Charts */}
             <ChartSection expenses={expenses} />
-
-            {/* Expenses list + Upcoming */}
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
               <div className="xl:col-span-2">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
@@ -156,12 +173,19 @@ export default function DashboardPage() {
                   />
                 </div>
               </div>
-              <div>
+              <div className="space-y-4">
                 <UpcomingPanel installments={upcomingInstallments} />
+                <IncomePanel
+                  incomes={incomes}
+                  onAdd={addIncome}
+                  onRemove={removeIncome}
+                />
               </div>
             </div>
           </div>
-        ) : (
+        )}
+
+        {view === "list" && (
           <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
@@ -184,6 +208,16 @@ export default function DashboardPage() {
           </div>
         )}
 
+        {view === "financeiro" && (
+          <div className="max-w-2xl">
+            <IncomePanel
+              incomes={incomes}
+              onAdd={addIncome}
+              onRemove={removeIncome}
+            />
+          </div>
+        )}
+
         {/* ── Footer ─────────────────────────────────────────────────────── */}
         <footer className="text-center py-4 border-t border-white/5">
           <p className="text-xs text-gray-600">
@@ -192,7 +226,6 @@ export default function DashboardPage() {
         </footer>
       </div>
 
-      {/* ── Add Expense Modal ─────────────────────────────────────────────── */}
       <AddExpenseModal
         open={addOpen}
         onClose={() => setAddOpen(false)}
