@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏗️ Reforma em Controle
 
-## Getting Started
+> Dashboard financeiro para controle de despesas de obra — construído com Next.js 15, React 19 e shadcn/ui.
 
-First, run the development server:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SEU_USUARIO/reforma-dashboard)
+
+---
+
+## ✨ Funcionalidades
+
+- **Cards de resumo** — Total, pago, pendente e vencido em tempo real
+- **Barra de progresso global** — Visualize o avanço da reforma
+- **Gráficos interativos** — Distribuição por categoria e pago vs pendente
+- **Tabela expansível** — Parcelas detalhadas por despesa
+- **Marcar como pago/pendente** — Clique em cada parcela
+- **Adicionar/remover despesas** — Modal completo com validação
+- **Próximos vencimentos** — Painel lateral com alertas de atraso
+- **Persistência local** — Dados salvos no localStorage
+
+## 📦 Despesas Pré-cadastradas
+
+| Despesa | Valor | Pagamento |
+|---|---|---|
+| GM Portas – Porta + Dobradiças | R$ 1.338,00 | À vista |
+| Cobertura Retrátil (5,30×1,70) | R$ 9.000,00 | R$3.600 entrada + 5× R$1.080 |
+| Pedreiro | R$ 3.000,00 | 3× R$1.000 |
+| Material OBRAMAX | R$ 3.100,00 | 3× R$1.033 |
+
+## 🚀 Rodando localmente
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌐 Deploy no Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Suba o projeto para o GitHub
+2. Acesse [vercel.com](https://vercel.com) → **Add New Project**
+3. Importe o repositório
+4. Clique em **Deploy** — sem variáveis de ambiente necessárias!
 
-## Learn More
+## 🛠️ Stack
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js 15](https://nextjs.org/) — App Router
+- [React 19](https://react.dev/)
+- [shadcn/ui](https://ui.shadcn.com/) — Componentes acessíveis
+- [Recharts](https://recharts.org/) — Gráficos
+- [Lucide React](https://lucide.dev/) — Ícones
+- [Tailwind CSS v4](https://tailwindcss.com/)
