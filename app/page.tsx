@@ -163,7 +163,7 @@ export default function DashboardPage() {
         {view === "overview" && (
           <div className="space-y-6">
             <ChartSection expenses={expenses} incomes={incomes} />
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
               <div className="xl:col-span-2">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
                   <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-widest mb-5">
