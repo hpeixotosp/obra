@@ -21,7 +21,7 @@ export function UpcomingPanel({ installments }: UpcomingPanelProps) {
   const today = new Date();
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 h-full">
+    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
       <div className="flex items-center gap-2 mb-5">
         <Clock className="h-4 w-4 text-amber-400" />
         <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
