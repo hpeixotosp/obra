@@ -72,10 +72,15 @@ export default function DashboardPage() {
                 <HardHat className="h-6 w-6 text-indigo-400" />
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                  Reforma em{" "}
-                  <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
-                    Controle
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
+                  Reforma{" "}
+                  <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+                    Elegante e Sincera
+                  </span>
+                  <br className="sm:hidden" />
+                  {" "}na{" "}
+                  <span className="bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent">
+                    Residencia da Lady
                   </span>
                 </h1>
                 <p className="text-gray-500 text-sm">
@@ -221,7 +226,7 @@ export default function DashboardPage() {
         {/* ── Footer ─────────────────────────────────────────────────────── */}
         <footer className="text-center py-4 border-t border-white/5">
           <p className="text-xs text-gray-600">
-            Reforma em Controle · Dados salvos localmente no seu navegador
+            Reforma Elegante e Sincera na Residencia da Lady · Dados salvos localmente no seu navegador
           </p>
         </footer>
       </div>

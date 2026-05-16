@@ -9,13 +9,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Reforma em Controle · Dashboard Financeiro",
+  title: "Reforma Elegante e Sincera na Residencia da Lady",
   description:
-    "Dashboard financeiro para controle de despesas da reforma. Gerencie parcelas, acompanhe pagamentos e visualize o progresso da sua obra.",
+    "Dashboard financeiro para controle de despesas da reforma na residencia da Lady. Gerencie parcelas, acompanhe pagamentos e visualize o progresso da obra.",
   keywords: ["reforma", "controle financeiro", "dashboard", "obra", "despesas"],
   openGraph: {
-    title: "Reforma em Controle",
-    description: "Dashboard financeiro para controle de despesas da obra.",
+    title: "Reforma Elegante e Sincera na Residencia da Lady",
+    description: "Dashboard financeiro para controle de despesas da reforma.",
     type: "website",
   },
 };

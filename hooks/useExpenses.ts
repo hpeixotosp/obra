@@ -10,8 +10,8 @@ import {
   PaymentStatus,
 } from "@/lib/data";
 
-const STORAGE_KEY = "reforma-dashboard-expenses-v4";
-const INCOME_KEY = "reforma-dashboard-incomes-v4";
+const STORAGE_KEY = "reforma-dashboard-expenses-v5";
+const INCOME_KEY = "reforma-dashboard-incomes-v5";
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
