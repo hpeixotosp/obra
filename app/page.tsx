@@ -67,20 +67,18 @@ export default function DashboardPage() {
         {/* ── Header ───────────────────────────────────────────────────────── */}
         <header className="flex items-start justify-between gap-4 flex-wrap">
           <div>
-            <div className="flex items-center gap-3 mb-1">
-              <div className="p-2.5 bg-indigo-500/15 rounded-xl border border-indigo-500/20">
-                <HardHat className="h-6 w-6 text-indigo-400" />
+            <div className="flex items-center gap-4 mb-1">
+              <div className="hidden sm:flex p-3 bg-gradient-to-br from-indigo-500/20 to-pink-500/20 rounded-2xl border border-white/10 shadow-lg shadow-pink-500/10">
+                <HardHat className="h-7 w-7 text-pink-400" />
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
-                  Reforma{" "}
-                  <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
-                    Elegante e Sincera
-                  </span>
-                  <br className="sm:hidden" />
-                  {" "}na{" "}
-                  <span className="bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent">
-                    Residencia da Lady
+                <p className="text-xs sm:text-sm font-semibold tracking-widest text-indigo-400 uppercase mb-1">
+                  Reforma Elegante e Sincera
+                </p>
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-1">
+                  Residência da{" "}
+                  <span className="bg-gradient-to-r from-pink-400 via-rose-400 to-orange-400 bg-clip-text text-transparent">
+                    Lady
                   </span>
                 </h1>
                 <p className="text-gray-500 text-sm">
@@ -226,7 +224,7 @@ export default function DashboardPage() {
         {/* ── Footer ─────────────────────────────────────────────────────── */}
         <footer className="text-center py-4 border-t border-white/5">
           <p className="text-xs text-gray-600">
-            Reforma Elegante e Sincera na Residencia da Lady · Dados salvos localmente no seu navegador
+            Reforma Elegante e Sincera na Residência da Lady · Dados salvos localmente no seu navegador
           </p>
         </footer>
       </div>
