@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Expense, Installment, initialExpenses, PaymentStatus } from "@/lib/data";
 
-const STORAGE_KEY = "reforma-dashboard-expenses";
+const STORAGE_KEY = "reforma-dashboard-expenses-v2";
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
@@ -14,6 +14,8 @@ export function useExpenses() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    // Limpa versões antigas do cache ao detectar nova versão
+    localStorage.removeItem("reforma-dashboard-expenses");
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
