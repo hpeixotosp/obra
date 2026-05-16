@@ -10,8 +10,8 @@ import {
   PaymentStatus,
 } from "@/lib/data";
 
-const STORAGE_KEY = "reforma-dashboard-expenses-v3";
-const INCOME_KEY = "reforma-dashboard-incomes-v3";
+const STORAGE_KEY = "reforma-dashboard-expenses-v4";
+const INCOME_KEY = "reforma-dashboard-incomes-v4";
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
@@ -26,7 +26,9 @@ export function useExpenses() {
     // Limpa versões antigas do cache
     localStorage.removeItem("reforma-dashboard-expenses");
     localStorage.removeItem("reforma-dashboard-expenses-v2");
+    localStorage.removeItem("reforma-dashboard-expenses-v3");
     localStorage.removeItem("reforma-dashboard-incomes-v2");
+    localStorage.removeItem("reforma-dashboard-incomes-v3");
 
     try {
       const storedExpenses = localStorage.getItem(STORAGE_KEY);

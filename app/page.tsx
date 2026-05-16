@@ -159,7 +159,7 @@ export default function DashboardPage() {
         {/* ── Main Content ─────────────────────────────────────────────── */}
         {view === "overview" && (
           <div className="space-y-6">
-            <ChartSection expenses={expenses} />
+            <ChartSection expenses={expenses} incomes={incomes} />
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
               <div className="xl:col-span-2">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
